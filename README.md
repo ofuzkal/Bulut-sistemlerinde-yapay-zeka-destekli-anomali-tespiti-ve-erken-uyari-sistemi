@@ -6,7 +6,7 @@
 
 Ahmet Yesevi Üniversitesi · Yapay Zeka Yüksek Lisans Dönem Projesi · 2026
 
-**[Proje Raporu · PDF · 65 Sayfa](Omer_Faruk_Uzkal_Donem_Projesi.pdf)** · **[English](#english)** · **[Lisans](LICENSE.md)**
+**[Proje Raporu · PDF · 65 Sayfa](Omer_Faruk_Uzkal_Donem_Projesi.pdf)** · **[Veri Kaynakları](DATA_SOURCES.md)** · **[English](#english)** · **[Lisans](LICENSE.md)**
 
 Python · FastAPI · Next.js · Supabase · Isolation Forest
 
@@ -31,24 +31,17 @@ Bulut altyapılarında CPU, bellek, disk, ağ ve istek davranışındaki sapmala
 
 ## Sistem akışı
 
-```mermaid
-flowchart LR
-    A[Geçmiş metrik verileri] --> B[Veri temizleme ve hazırlama]
-    B --> C[Isolation Forest]
-    C --> D[FastAPI]
-    E[Canlı telemetri simülasyonu] --> F[Kayan pencere ve Z-Score]
-    F --> D
-    D --> G[Next.js dashboard]
-    H[Supabase kimlik doğrulama] --> G
-    H --> D
-    G --> I[Grafikler, alarm listesi ve CSV]
-```
+![Geçmiş veri analizi ve canlı telemetri simülasyonunun ortak API ve dashboard akışı](architecture.svg)
+
+**Geçmiş veri:** hazırlama → Isolation Forest → API → dashboard.  
+**Simülasyon:** kayan pencere ve Z-Score → API → dashboard.  
+Supabase, panelde oturum açmayı ve API tarafındaki kimlik doğrulamayı destekler.
 
 ## Canlı akış ve erken uyarı
 
 ![Canlı telemetri simülasyonu: metrik grafiği ve aktif uyarılar](erken-uyari.png)
 
-Simülasyonda yeni veri noktaları backend'e iletilir. Kayan pencere üzerindeki sapmalar değerlendirilerek grafik ve alarm listesine yansıtılır. Bu ekran, üretim altyapısına bağlı bir canlı servis iddiası taşımaz.
+Simülasyonda yeni veri noktaları backend'e iletilir. Kayan pencere üzerindeki sapmalar değerlendirilerek grafik ve alarm listesine yansıtılır. Akış, akademik prototipte simüle edilen verilerle gösterilmiştir.
 
 ## Değerlendirme ve sınırlar
 
@@ -57,6 +50,14 @@ Rapor, yöntemleri anomali sayısı, anomali oranı, çalışma süresi ve karar
 Etiketli olay kayıtlarının sınırlı olması nedeniyle precision, recall ve F1-score üzerinden doğrulanmış bir başarı oranı sunulmamaktadır. Gerçek üretim ortamında sürekli izleme ve saha doğrulaması, prototipin ileride geliştirilebilecek yönleridir.
 
 Ekran görüntüleri proje klasöründeki uygulama çıktılarından alınmıştır. Bu depo akademik rapor ve proje tanıtımını içerir; kaynak kod dağıtımı içermez.
+
+## Veri kaynakları ve atıf
+
+CPU, disk, ağ ve istek metriklerinde kullanılan beş veri dosyasının kaynağı **[Numenta Anomaly Benchmark (NAB)](https://github.com/numenta/NAB)** koleksiyonudur. Verilerin hazırlanması ve analiz edilmesi, özgün veri kaynağının sahipliğini değiştirmez.
+
+**[Dosya bazında kaynaklar ve kaynakça açıklaması](DATA_SOURCES.md)** · **[Üçüncü taraf lisans bildirimleri](THIRD_PARTY_NOTICES.md)**
+
+Bu kaynakça açıklaması, PDF'nin 50 numaralı sayfasındaki veri seti kaydını tamamlar. Ham CSV dosyaları bu depoda dağıtılmamaktadır.
 
 ## Akademik bilgiler ve rapor
 
@@ -90,8 +91,10 @@ Limited labelled incident data prevents a validated precision/recall/F1 claim. T
 
 **[Read the full report in Turkish — PDF, 65 pages](Omer_Faruk_Uzkal_Donem_Projesi.pdf)**
 
+The five cloud time series originate from NAB; preprocessing and analysis do not confer ownership of the original data. See [data provenance and the bibliography clarification](DATA_SOURCES.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
+
 ## Lisans / License
 
 © 2026 Ömer Faruk Uzkal. Bu depodaki özgün rapor, tanıtım metinleri ve proje ekran görüntüleri **[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)** lisansı kapsamındadır.
 
-Atıf vererek ve lisans koşullarına uyarak ticari olmayan amaçlarla değiştirmeden paylaşabilirsiniz. Uyarlanmış sürümlerin dağıtımı ve lisans kapsamı dışındaki kullanımlar için ayrıca izin gerekir. Üçüncü taraf içerikler, logolar ve atıf yapılan eserler bu lisans kapsamına dahil değildir. Ayrıntılar: [LICENSE.md](LICENSE.md).
+Atıf vererek ve lisans koşullarına uyarak ticari olmayan amaçlarla değiştirmeden paylaşabilirsiniz. Uyarlanmış sürümlerin dağıtımı ve lisans kapsamı dışındaki kullanımlar için ayrıca izin gerekir. Üçüncü taraf içerikler, logolar ve atıf yapılan eserler bu lisans kapsamına dahil değildir. Ayrıntılar: [LICENSE.md](LICENSE.md) ve [üçüncü taraf bildirimleri](THIRD_PARTY_NOTICES.md).
